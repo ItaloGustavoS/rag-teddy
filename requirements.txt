@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pymongo
+pydantic
+transformers[sentencepiece]
+torch
+pytesseract
+Pillow
+pdf2image
+python-dotenv
+requests 
+sentencepiece
