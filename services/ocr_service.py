@@ -1,14 +1,10 @@
 import pytesseract
 from PIL import Image
-from pdf2image import convert_from_bytes # Alterado de convert_from_path para processar bytes
+from pdf2image import convert_from_bytes
 import io
 import logging
 
 logger_ocr = logging.getLogger(__name__)
-
-# Configure o caminho do Tesseract se não estiver no PATH (comum no Windows)
-# No Docker, geralmente está no PATH se instalado corretamente.
-# Ex: pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract' (Linux)
 
 # Idiomas para Tesseract (Português e Inglês são bons padrões para CVs no Brasil)
 TESSERACT_LANG = 'por+eng'
