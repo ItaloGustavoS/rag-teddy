@@ -2,15 +2,6 @@ import logging
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from typing import List, Optional, Union
 
-# Importar serviços e schemas
-# Assume que os arquivos estão na mesma estrutura de diretório
-# Para evitar problemas com imports relativos em diferentes contextos de execução,
-# certifique-se que a estrutura do projeto está correta e PYTHONPATH se necessário.
-# No Docker, isso geralmente funciona bem se o WORKDIR e CMD estão corretos.
-
-# from .services import ocr_service, llm_service, db_service # Usaria se fosse um pacote
-# from .models import schemas
-
 # Para execução direta ou via uvicorn sem ser um pacote instalado:
 from app.services.ocr_service import (
     extract_text_from_image_bytes,
@@ -96,9 +87,9 @@ async def process_resumes_endpoint(
                 status_code=400,
                 detail=f"Tipo de arquivo inválido: {file.filename}. Tipos permitidos: {', '.join(ALLOWED_MIME_TYPES)}",
             )
-        # ext = get_file_extension(file.filename)
-        # if not ext or ext not in ALLOWED_EXTENSIONS:
-        #     raise HTTPException(status_code=400, detail=f"Extensão de arquivo inválida: {file.filename}")
+         ext = get_file_extension(file.filename)
+         if not ext or ext not in ALLOWED_EXTENSIONS:
+             raise HTTPException(status_code=400, detail=f"Extensão de arquivo inválida: {file.filename}")
 
     for file in files:
         try:
@@ -206,9 +197,8 @@ async def health_check():
     }
 
 
-# Ponto de entrada para Uvicorn se executado diretamente (python app/main.py)
-# if __name__ == "__main__":
-#     import uvicorn
-#     # Note: o reload=True é para desenvolvimento.
-#     # O Docker CMD não usará --reload a menos que especificado no docker-compose.yml
-#     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+#Ponto de entrada para Uvicorn se executado diretamente (python app/main.py)
+if __name__ == "__main__":
+   import uvicorn
+# Note: o reload=True é para desenvolvimento.   O Docker CMD não usará --reload a menos que especificado no docker-compose.yml
+uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
