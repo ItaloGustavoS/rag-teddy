@@ -8,9 +8,9 @@ logger_llm = logging.getLogger(__name__)
 # Para português, modelos como 'csebuetnlp/mT5_multilingual_XLSum' ou
 # 'facebook/mbart-large-50-many-to-many-mmt' fine-tunado para sumarização
 # podem ser melhores, mas são maiores.
-MODEL_NAME = "google/flan-t5-small"  # ~250MB
+MODEL_NAME = "google/flan-t5-small"
 # Alternativa para sumarização (mais focado em inglês, mas pode funcionar):
-# MODEL_NAME_SUMMARIZATION = "sshleifer/distilbart-cnn-6-6" # ~400MB
+# MODEL_NAME_SUMMARIZATION = "sshleifer/distilbart-cnn-6-6"
 
 try:
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
@@ -35,8 +35,6 @@ def generate_summary(text: str, max_length: int = 150, min_length: int = 30) -> 
         )
         return "Erro: LLM não disponível para sumarização."
 
-    # Flan-T5 espera um prefixo de tarefa, mas podemos tentar sem para sumarização genérica
-    # ou adicionar "summarize: " ao início do texto.
     prompt = f"summarize: {text}"
 
     # Limitar o tamanho do input para evitar erros com o modelo
